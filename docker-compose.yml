@@ -1,0 +1,30 @@
+services:
+  dropvault:
+    build: .
+    container_name: dropvault
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - DATA_DIR=/data
+      - PUBLIC_BASE_URL=${PUBLIC_BASE_URL:-http://localhost:8080}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change-me}
+      # Optional SMTP notifications (copy values into .env)
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - NOTIFY_EMAIL=${NOTIFY_EMAIL:-}
+    volumes:
+      - dropvault_data:/data
+    networks:
+      - proxy
+    restart: unless-stopped
+volumes:
+  dropvault_data:
+networks:
+  proxy:
+    external: true
+    name: proxy

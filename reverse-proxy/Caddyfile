@@ -1,0 +1,44 @@
+# DropVault. The handle_path directive removes /dropvault before forwarding.
+# Local Docker Desktop default: host.docker.internal:8080
+# VPS default: set DROPVAULT_UPSTREAM=dropvault:8080 in .env
+nicolaspiquion.fr {
+    encode gzip
+
+    redir /dropvault /dropvault/ 308
+
+    handle_path /dropvault/* {
+        reverse_proxy {$DROPVAULT_UPSTREAM}
+    }
+
+    # Keep the naked domain available for future routes/projects.
+    handle {
+        respond "Reverse proxy is running" 200
+    }
+}
+
+# Local Docker Desktop route. This uses HTTP and does not request a certificate.
+http://localhost {
+    encode gzip
+    redir /dropvault /dropvault/ 308
+
+    handle_path /dropvault/* {
+        reverse_proxy {$DROPVAULT_UPSTREAM}
+    }
+    handle {
+        respond "Reverse proxy is running" 200
+    }
+}
+
+# Add future projects like this:
+#
+# app.nicolaspiquion.fr {
+#     reverse_proxy my-app:3000
+# }
+#
+# Or route another project under a path:
+#
+# nicolaspiquion.fr {
+#     handle_path /another-app/* {
+#         reverse_proxy another-app:3000
+#     }
+# }
