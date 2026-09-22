@@ -16,7 +16,7 @@ A reusable Caddy reverse-proxy stack is included in [`reverse-proxy/`](reverse-p
 
 ## Portainer
 
-Create a new Stack from this folder or paste `docker-compose.yml`. Set the environment variables in the Stack UI, especially `PUBLIC_BASE_URL=https://nicolaspiquion.fr/dropvault` and the SMTP values. Put the service behind your existing Plesk/Nginx reverse proxy and route `/dropvault/` to `127.0.0.1:8080`.
+Create a new Stack from this folder or paste `docker-compose.yml`. Set the environment variables in the Stack UI, especially `PUBLIC_BASE_URL=https://nicolaspiquion.fr/dropvault`, `APP_PORT=18080`, and the SMTP values. Put the service behind your existing Plesk/Nginx reverse proxy and route `/dropvault/` to `127.0.0.1:18080`.
 
 ## Notes
 
